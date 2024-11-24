@@ -106,7 +106,7 @@ public class AutoIdentifierExtension : IMarkdownExtension
             // If it is the case, we skip the auto identifier for the Heading
             if (!doc.TryGetLinkReferenceDefinition(keyPair.Key, out var linkDef))
             {
-                doc.SetLinkReferenceDefinition(keyPair.Key, keyPair.Value, true);
+                doc.SetLinkReferenceDefinition(keyPair.Key, keyPair.Value, !processor.TrackTrivia);
             }
         }
         // Once we are done, we don't need to keep the intermediate dictionary around

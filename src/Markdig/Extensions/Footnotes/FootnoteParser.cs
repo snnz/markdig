@@ -78,7 +78,7 @@ public class FootnoteParser : BlockParser
             LabelSpan = labelSpan,
             Label = label
         };
-        processor.Document.SetLinkReferenceDefinition(footnote.Label, linkRef, true);
+        processor.Document.SetLinkReferenceDefinition(footnote.Label, linkRef, !processor.TrackTrivia);
         processor.NewBlocks.Push(footnote);
         return BlockState.Continue;
     }
