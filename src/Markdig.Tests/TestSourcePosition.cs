@@ -161,6 +161,17 @@ literal      ( 0, 8)  8-8
     }
 
     [Test]
+    public void TestEmphasis4()
+    {
+        Check("**foo*", @"
+paragraph    ( 0, 0)  0-5
+literal      ( 0, 0)  0-0
+emphasis     ( 0, 1)  1-5
+literal      ( 0, 2)  2-4
+");
+    }
+
+    [Test]
     public void TestEmphasisFalse()
     {
         Check("0123456789**0123", @"
@@ -522,13 +533,17 @@ literal      ( 1, 6)  8-9
     [Test]
     public void TestAbbreviations()
     {
-        Check("*[HTML]: Hypertext Markup Language\r\n\r\nLater in a text we are using HTML and it becomes an abbr tag HTML", @"
+        Check("*[HTML]: Hypertext Markup Language\r\n\r\nLater in a text we are using HTML and it becomes an abbr tag HTML\r\n\r\nHTML abbreviation at the beginning of a line", @"
 paragraph    ( 2, 0) 38-102
 container    ( 2, 0) 38-102
 literal      ( 2, 0) 38-66
 abbreviation ( 2,29) 67-70
 literal      ( 2,33) 71-98
 abbreviation ( 2,61) 99-102
+paragraph    ( 4, 0) 107-150
+container    ( 4, 0) 107-150
+abbreviation ( 4, 0) 107-110
+literal      ( 4, 4) 111-150
 ", "abbreviations");
     }
 
@@ -793,6 +808,29 @@ literal      ( 4, 0) 11-11
 tablecell    ( 4, 2) 13-13
 paragraph    ( 4, 2) 13-13
 literal      ( 4, 2) 13-13
+", "pipetables");
+    }
+
+    [Test]
+    public void TestPipeTable3()
+    {
+        //     01234 5678 9ABCD
+        Check("|a|b\n-|-\n0|1|\n", @"
+table        ( 0, 0)  0-12
+tablerow     ( 0, 1)  1-3
+tablecell    ( 0, 1)  1-1
+paragraph    ( 0, 1)  1-1
+literal      ( 0, 1)  1-1
+tablecell    ( 0, 3)  3-3
+paragraph    ( 0, 3)  3-3
+literal      ( 0, 3)  3-3
+tablerow     ( 2, 0)  9-11
+tablecell    ( 2, 0)  9-9
+paragraph    ( 2, 0)  9-9
+literal      ( 2, 0)  9-9
+tablecell    ( 2, 2) 11-11
+paragraph    ( 2, 2) 11-11
+literal      ( 2, 2) 11-11
 ", "pipetables");
     }
 
